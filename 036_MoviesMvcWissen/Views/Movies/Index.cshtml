@@ -11,6 +11,9 @@
 <table class="table">
     <tr>
         <td>
+
+        </td>
+        <td>
             <b style="color:darkgreen">Name</b>
         </td>
         <td>
@@ -23,6 +26,10 @@
     @foreach (var movie in Model)
         {
             <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = movie.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
+                </td>
                 <td>
                     @movie.Name
                 </td>
@@ -38,7 +45,8 @@
 </table>
 <span style="color:lime; display: block; text-align:center">
     @Model.Count Movies Found
-    <br /><br />
+    <br />
     <a class="btn btn-dark" href="~/Movies/Add">Add Movie</a>
-
+    <br />
+    <label class="text-success">@TempData["Info"]</label>
 </span>
