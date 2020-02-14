@@ -1,18 +1,45 @@
-﻿@model List<_036_MoviesMvcWissen.Entities.Movie>
+﻿@model _036_MoviesMvcWissen.Models.ViewModels.MoviesIndexViewModel
+@*@model List<_036_MoviesMvcWissen.Entities.Movie>*@
+
+@using _036_MoviesMvcWissen.Helpers
 
 @{
     ViewBag.Title = "Movies";
 }
+@{
+    Html.RenderAction("Welcome");
+}
 
-<h2>@ViewBag.Title</h2>
 
+<h3>@ViewBag.Title</h3>
 
+<a class="btn btn-dark" href="~/Movies/List">List Movie</a>
+<br />
+
+@using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+{
+
+    <table class="table">
+        <tr>
+            <td style="width:15%;">
+                Production Year:
+            </td>
+            <td>
+                @Html.DropDownList("YearId", Model.Years)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @Html.Button("Saerch", "btn btn-warning", "submit")
+            </td>
+        </tr>
+    </table>
+}
+@*@Html.Action("Welcome")*@
 
 <table class="table">
     <tr>
-        <td>
-
-        </td>
+        <td></td>
         <td>
             <b style="color:darkgreen">Name</b>
         </td>
@@ -23,30 +50,38 @@
             <b style="color:darkgreen">Box Office Return</b>
         </td>
     </tr>
-    @foreach (var movie in Model)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = movie.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
-                </td>
-                <td>
-                    @movie.Name
-                </td>
-                <td>
-                    @movie.ProductionYear
-                </td>
-                <td>
-                    @movie.BoxOfficeReturn
-                </td>
-            </tr>
-        
-     }
+    @foreach (var movie in Model.movies)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(" ", "Details", new { id = movie.Id }, new { @class = "fa fa-info text-warning" })
+                &nbsp;
+                @Html.ActionLink(" ", "Edit", new { id = movie.Id }, new { @class = "fa fa-pencil-square-o text-succes" })
+                &nbsp;
+                @Html.ActionLink(" ", "Delete", new { id = movie.Id }, new { @class = "fa fa-trash text-danger" })
+
+
+                @*@Html.ActionLink("Edit", "Edit", new { id = movie.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = movie.Id })*@
+            </td>
+            <td>
+                @movie.Name
+            </td>
+            <td>
+                @movie.ProductionYear
+            </td>
+            <td>
+                @movie.BoxOfficeReturn
+            </td>
+        </tr>
+
+    }
 </table>
 <span style="color:lime; display: block; text-align:center">
-    @Model.Count Movies Found
+    @Model.movies.Count Movies Found
     <br />
     <a class="btn btn-dark" href="~/Movies/Add">Add Movie</a>
     <br />
+
     <label class="text-success">@TempData["Info"]</label>
 </span>

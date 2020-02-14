@@ -5,21 +5,12 @@
 
 <h2>@ViewBag.Title</h2>
 
+@Html.Partial("_Details", Model)
+<br />
 @using (Html.BeginForm("Delete", "Movies", FormMethod.Post))
 {
-    <div class="form-group">
-        @Html.DisplayNameFor(e => e.Name)
-        @Html.DisplayFor(e => e.Name)
-    </div>
-    <div class="form-group">
-        @Html.Label("Box Office Return")
-        @Html.DisplayFor( e => e.BoxOfficeReturn)
-    </div>
-    <div class="form-group">
-        @Html.DisplayNameFor(e => e.ProductionYear)
-        @Html.DisplayFor(e => e.ProductionYear)
-    </div>
+    @Html.HiddenFor(e => e.Id)
     <button type="submit" class="btn btn-success">Yes</button>
     @:&nbsp;
-    @Html.ActionLink("No" , "Index" , null, htmlAttributes : new {@class = "btn btn-danger"})
+    @Html.ActionLink("No", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })
 }

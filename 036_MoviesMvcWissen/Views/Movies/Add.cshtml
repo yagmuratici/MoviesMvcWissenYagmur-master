@@ -1,6 +1,7 @@
 ﻿ 
 @{
     ViewBag.Title = "Add Movie";
+    var directors = (MultiSelectList)ViewData["directors"]; //many to many olduğu için dropt down list 
 }
 
 <h2>@ViewBag.Title</h2>
@@ -28,7 +29,17 @@
         <input type="text" class="form-control" id="tbboxofficereturn" name="BoxOfficeReturn"/> 
     </div>
 
-    <button type="submit" class="btn btn-primary" style="background-color:darkolivegreen">Save</button>
-    &nbsp;
-    <button type="reset" class="btn btn-dark">Reset</button>
+    <div class="form-group">
+        <label for="ddlDirectors">Directors</label>
+        <select id="ddlDirectors" class="form-control" name="Directors"   multiple>  @*çoklu seçim olacak diye multi ekledik*@
+             @foreach (var director in directors)
+             {
+                <option value="@director.Value">@director.Text</option>
+             }
+        </select>
+    </div>
+
+        <button type="submit" class="btn btn-primary" style="background-color:darkolivegreen">Save</button>
+        &nbsp;
+        <button type="reset" class="btn btn-dark">Reset</button>
 </form>

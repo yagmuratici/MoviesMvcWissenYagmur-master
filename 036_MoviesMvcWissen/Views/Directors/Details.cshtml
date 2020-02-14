@@ -1,0 +1,64 @@
+﻿@model _036_MoviesMvcWissen.Entities.Director
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+@{
+    var movieDirectors = Model.MovieDirectors;
+    var MovieName = "";
+    foreach (var movieDirector in movieDirectors)
+
+    {
+        MovieName += movieDirector.Movie.Name + ", ";
+    }
+
+    MovieName = MovieName.Trim(',', ' ');//son  , ü kaldırmak için.
+}
+<h2>Details</h2>
+
+<div>
+    <h4>Director</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Retired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Retired)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="row">
+    <div class="col-md-1">
+        <b> @Html.Label("Movies", "Movies:")</b>
+    </div>
+
+    <div class="col-md-11">
+        <b> @MovieName </b>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

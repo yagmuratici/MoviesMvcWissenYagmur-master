@@ -1,0 +1,91 @@
+﻿@model _036_MoviesMvcWissen.Models.ViewModels.MoviesIndexViewModel
+@using _036_MoviesMvcWissen.Helpers
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+@using (Html.BeginForm())
+{
+<div class="row">
+    <div class="col-md-2">
+        @Html.Label("lbName", "Name:")
+    </div>
+
+    <div class="col-md-10">
+        @Html.TextBox("Name", "", new { @class = "form-control", id= "lbName" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        @Html.Label("lbProductionYear", "ProductionYear:")
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownList("YearId", Model.Years, "--All--", new { @class = "form-control" , id= "lbProductionYear" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        @Html.Label("lbBoxOfficeReturn", "BoxOfficeReturn:")
+    </div>
+    Between
+    <div class="col-md-4">
+        @Html.TextBox("Min", "", new { @class = "form-control", id = "lbBoxOfficeReturn" ,placeholder ="Min" })
+    </div>
+    And
+    <div class="col-md-4">
+        @Html.TextBox("Max", "", new { @class = "form-control", id = "lbBoxOfficeReturn" , placeholder = "Max" })
+    </div>
+</div>
+
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Button("Search", "btn btn-success", "submit")
+        </div>
+
+        <a class="btn btn-secondary" href="@Url.RouteUrl("Default", new {Controller = "Movies", Action = "List"})">Clear </a>
+    </div>
+
+    }
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Name")
+            </th>
+            <th>
+                @Html.Label("ProductionYear")
+
+            </th>
+            <th>
+                @Html.Label("BoxOfficeReturn")
+
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.movies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductionYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoxOfficeReturn)
+                </td>
+                
+            </tr>
+        }
+
+    </table>

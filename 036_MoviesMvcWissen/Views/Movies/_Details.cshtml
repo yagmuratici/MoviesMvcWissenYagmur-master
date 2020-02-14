@@ -1,0 +1,52 @@
+﻿@model Movie
+
+
+@{ 
+    var movieDirectors = Model.MovieDirectors;
+    var directorFullName = "";
+    foreach (var movieDirector in movieDirectors)
+    {
+        directorFullName=movieDirector.Director.Name + " " + movieDirector.Director.Surname + ", ";
+    }
+    directorFullName = directorFullName.Trim(',' , ' ');//son  , ü kaldırmak için.
+}
+
+@*<div class="row">
+    <div class="col-md-2">
+        <b> @Html.DisplayNameFor(e => e.Name):</b>
+    </div>
+
+    <div class="col-md-10">
+        <b> @Html.DisplayFor(e => e.Name)</b>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <b> @Html.DisplayNameFor(e => e.BoxOfficeReturn):</b>
+    </div>
+
+    <div class="col-md-10">
+        <b>  @Html.DisplayFor(e => e.BoxOfficeReturn)</b>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <b> @Html.DisplayNameFor(e => e.ProductionYear):</b>
+    </div>
+
+    <div class="col-md-10">
+        <b>   @Html.DisplayFor(e => e.ProductionYear)</b>
+    </div>
+</div>*@
+@Html.DisplayForModel()
+<div class="row">
+    <div class="col-md-2">
+         @Html.Label("Directors" , "Directors:")
+    </div>
+
+    <div class="col-md-10">
+        <b> @directorFullName </b>
+    </div>
+</div>

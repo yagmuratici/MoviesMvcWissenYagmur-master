@@ -113,6 +113,13 @@
                     }
                 );
             }
+            context.Users.AddOrUpdate(e => e.UserName, //bu user da biri varsa ekleme yoksa ekle update et
+               new User()
+               {
+                   UserName = "Ateş",
+                   Password = "Leo"
+               }
+            );
         }
     }
 }

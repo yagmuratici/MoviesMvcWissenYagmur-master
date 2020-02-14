@@ -12,44 +12,76 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="header" style="background-color:lightcoral">
-            <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="~/Home/Index">Menü</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <nav class="navbar navbar-expand-lg" />
+            <a class="navbar-brand" href="@Url.Action("Index" ,"Home")"> Movies MVC</a>
+            @*<a class="navbar-brand" href="~/Home/Index">Menü</a>*@
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="~/Movies/Index" target="_blank">Movies <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Demos
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="~/Demos/Razor1View">Razor</a>
-                            </div>
-                        </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>*@
-                    </ul>
-                    @*<form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>*@
-                </div>
-            </nav>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <span style="color:white;">Welcome @User.Identity.Name</span>
+                @:&nbsp;
+                <a style="color:blueviolet;" href="@Url.RouteUrl("Default", new { controller = "Login" , action = "Logout" })">Logout</a>
+
+            }
+            else
+            {
+
+                <a style="color:blueviolet;" href="@Url.RouteUrl("Default", new { controller = "Login" , action = "Index" })">Login</a>
+
+            }
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Movies" , action = "Index" })" target="_blank">Movies</a>
+                        @*<a class="nav-link" href="~/Movies/Index" target="_blank">Movies <span class="sr-only">(current)</span></a>*@
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Directors")">Directors</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Reviews")">Reviews</a>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Demos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="~/Demos/Razor1View">Razor</a>
+                            <a class="dropdown-item" href="~/Demos/FromRoute/8">Get Value from Route</a>
+                            <a class="dropdown-item" href="~/Demos/FromQueryString?name=Alev&surname=cpr">Get Value from Query</a>
+                            <a class="dropdown-item" href="~/Demos/GetPeople">Get People</a>
+                            <a class="dropdown-item" href="~/Demos/GetPeopleAjax">Get People Ajax</a>
+                          
+
+                        </div>
+                    </li>
+                    @*<li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>*@
+                </ul>
+                @*<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>*@
+
+            </div>
         </div>
         <div class="body">
             @RenderBody() 

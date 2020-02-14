@@ -1,18 +1,14 @@
 ﻿@model Movie
+
+@using _036_MoviesMvcWissen.Helpers
+
 @{
     ViewBag.Title = "Edit Movie";
     var years = ViewBag.Years as SelectList;
-
-    <h2>@ViewBag.Title</h2>
-
-    @*@Html.BeginForm("Edit", "Movies", FormMethod.Post)
-        {
-
-        }
-        @{
-            Html.EndForm();
-        }*@
+    var directors = ViewBag.directors as MultiSelectList;
 }
+<h2>@ViewBag.Title</h2>
+
 @using (Html.BeginForm("Edit", "Movies", FormMethod.Post))
 {
     @Html.Hidden("Id", Model.Id)
@@ -28,9 +24,18 @@
         @Html.Label("tbBoxOfficeReturn", "Box Office Return")
         @Html.TextBox("BoxOfficeReturn", Model.BoxOfficeReturn, new { @class = "form-control", placeHolder = "Enter movie office return", id = "tbBoxOfficeReturn" })
     </div>
-    <input type="submit" class="btn btn-success" value="Save" />
+
+    <div class="form-group">
+        @Html.Label("ddlDirectors","Directors:")
+        @Html.ListBox("directorIds",directors, new { @class = "form-control", id = "ddlDirectors" })
+    </div>
+
+    @*<input type="submit" class="btn btn-success" value="Save" />*@
+    @Html.SaveButton()
     @:&nbsp;
-    <input type="reset" class="btn btn-warning" value="Clear" />
+
+    @*<input type="reset" class="btn btn-warning" value="Clear" />*@
+    @Html.Button("Clear" , "btn btn-warning", "reset")
     <br />
     <label class="text-danger">@TempData["Info"]</label>
 
