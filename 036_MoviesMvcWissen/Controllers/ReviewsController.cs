@@ -43,6 +43,8 @@ namespace _036_MoviesMvcWissen.Controllers
         }
 
         // GET: Reviews/Create
+
+        [AllowAnonymous]
         public ActionResult Create()
         {
             ViewBag.MovieId = new SelectList(db.Movies, "Id", "Name");
@@ -54,6 +56,7 @@ namespace _036_MoviesMvcWissen.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Create([Bind(Include = "Id,Content,Rating,Reviewer,MovieId")] Review review)
         {
             if (ModelState.IsValid)

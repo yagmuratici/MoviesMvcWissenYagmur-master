@@ -1,5 +1,22 @@
-﻿<table class="table">
+﻿@model IEnumerable<_036_MoviesMvcWissen.Models.Demos.Templates.PersonModel>
+
+@{ 
+    var ajaxOptions = new AjaxOptions()
+    {
+        AllowCache = false,
+        UpdateTargetId = "div_users",
+        InsertionMode = InsertionMode.Replace,
+        Confirm = "Are you sure ?",
+        OnSuccess = "succesful",
+        OnFailure = "error"
+    };
+}
+
+<table class="table">
     <tr>
+        <th>
+
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.FullName)
         </th>
@@ -12,12 +29,13 @@
         <th>
             @Html.DisplayNameFor(model => model.BirthDate)
         </th>
-        <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Ajax.ActionLink("Delete", "DeletePersonAjax","Demos", new { id = item.Id}, ajaxOptions)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
@@ -30,9 +48,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BirthDate)
             </td>
-            
         </tr>
     }
-
 </table>
 
+<label id="lMessage" style="color:red;"></label>
+
+<script>
+    function succesful() {
+        //alert("Operation successful");
+        console.log("Operation successful");
+        $("#lMessage").text("Operation successful.");  //jquery kodu
+    }
+
+    function error() {
+        $("#lMessage").text("Operation failure.");
+    }
+</script>

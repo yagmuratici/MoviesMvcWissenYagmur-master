@@ -2,23 +2,35 @@
 
 @{
     ViewBag.Title = "GetPeopleAjax";
+    var ajaxOptions = new AjaxOptions()
+    {
+        AllowCache = false,
+        Url = Url.Action("AddPersonAjax", "Demos"),
+        HttpMethod = "POST",
+        UpdateTargetId = "div_users",
+        InsertionMode = InsertionMode.Replace
+    };
+
+
+
 }
 
 <h2>GetPeopleAjax</h2>
 
-@using (Html.BeginForm("AddPersonAjax", "Demos" , FormMethod.Post))
+@*@using (Html.BeginForm("AddPersonAjax","Demos",FormMethod.Post))*@
+@using (Ajax.BeginForm(ajaxOptions))
 {
     @Html.AntiForgeryToken()
+
+
 
     <div class="form-horizontal">
         <h4>PersonModel</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.PersonModel.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PersonModel.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonModel.FullName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -27,7 +39,6 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.PersonModel.GraduatedFromUniversity)
-                    @Html.ValidationMessageFor(model => model.PersonModel.GraduatedFromUniversity, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -36,15 +47,13 @@
             @Html.LabelFor(model => model.PersonModel.IdentityNo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PersonModel.IdentityNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonModel.IdentityNo, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.PersonModel.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PersonModel.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonModel.BirthDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.PersonModel.BirthDate, "Date")
             </div>
         </div>
 
@@ -56,4 +65,12 @@
     </div>
 }
 
+<hr />
+<div id="div_users">
+    @Html.Partial("_PeopleList", Model.PeopleModel)
+</div>
 
+@section ajaxScript
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

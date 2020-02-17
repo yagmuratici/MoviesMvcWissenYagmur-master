@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>People | jQuery AJAX</title>
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script>
+        $(document).ready(function () {  /*sayfa yüklendikten hemen sonra çalışırız*/
+            $.getJSON("./Demos/GetPeopleJson", function (response) { /*sayfa yüklenince request yapıcak ve response dönecek(listolarak)*/
+                $.each(response, function (i, data) {
+                    $("#ul_people").append("<li>Id: " + data.Id + " -Full Name: " + data.FullName + " -Identity No: " + data.IdentityNo + " -University Graduate: " + data.GraduatedFromUniversity + " -Birthdate" + data.BirthDate + "</li>");
+
+                });
+
+            });  /*json yada xml ihtiyaç var biz json çağırdık view çağıramazsın mvc yapısı o*/
+            $("#bRefresh").click(function () {
+                clearPeople();
+                $.ajax({
+                    url: "./Demos/GetPeopleJson",
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    cache: false,
+
+                    success: function (response, response_textstatus, response_jqhxr) {
+                        //console.log("TextStatus: " + response_textstatus + " - jqhxr" + response_jqhxr); 
+                        var html = '<ul id="ul_people">';
+                        for (var i = 0; i < response.length; i++) {
+                            html += "<li> Id: " + response[i].Id + " - Full Name: " + response[i].FullName + " - Identity No: " + response[i].IdentityNo + " - University Graduate: " + response[i].GraduatedFromUniversity + " - Birthdate" + response[i].BirthDate + "</li>";
+                        }
+                        html += "</ul>";
+                        $("#div_people").html(html);
+                    },
+                  
+                    error: function (response_textstatus, response_jqhxr) {
+                        alert("An error occured! ");
+                        console.log("TextStatus: " + response_textstatus + " - jqhxr" + response_jqhxr);
+                    }
+                });
+            });
+        });
+
+
+        function clearPeople() {
+           
+            $("#div_people").empty();
+        }
+
+    </script>
+</head>
+<body>
+    <h2>People ♥</h2> 
+    <div id="div_people">
+        <ul id="ul_people"></ul>
+    </div>
+    <button id="bRefresh">Refresh</button>
+    &nbsp;
+    <button id="bClear" onclick="javascript: clearPeople()">Clear</button>
+
+</body>
+</html>
+
