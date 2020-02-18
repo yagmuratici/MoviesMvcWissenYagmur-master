@@ -20,6 +20,8 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+           // context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Roles', RESEED,0)");
+
 
             List<Movie> movieList = new List<Movie>
             {
@@ -87,6 +89,29 @@
                 }
             }
 
+            List<User> userList = new List<User>()
+            {
+                new User() { Id = 1, UserName = "Ateş", Password = "Leo", Active = true, RoleId = 2},
+                new User() { Id = 2, UserName = "Admin", Password = "Admin", Active = true, RoleId = 1}
+            };
+
+            List<Role> roleList = new List<Role>()
+            {
+                new Role() { Id = 1 , Name = "Admin", Users = new List<User>()},
+                new Role() { Id = 2 , Name = "User", Users = new List<User>()}
+            };
+
+            foreach (var role in roleList)
+            {
+                var users = userList.Where(e => e.RoleId == role.Id).ToList();
+                foreach (var user in users)
+                {
+                    role.Users.Add(user);
+                }
+                
+            }
+
+
             // context update:
             foreach (Movie movie in movieList)
             {
@@ -113,13 +138,23 @@
                     }
                 );
             }
-            context.Users.AddOrUpdate(e => e.UserName, //bu user da biri varsa ekleme yoksa ekle update et
-               new User()
-               {
-                   UserName = "Ateş",
-                   Password = "Leo"
-               }
-            );
+            //context.Users.AddOrUpdate(e => e.UserName, //bu user da biri varsa ekleme yoksa ekle update et
+            //   new User()
+            //   {
+            //       UserName = "Ateş",
+            //       Password = "Leo"
+            //   }
+
+            foreach (var role in roleList)
+            {
+                context.Roles.AddOrUpdate(e => e.Name, new Role()
+                {
+                    Name= role.Name,
+                    Users = role.Users
+                }
+                );
+            }
+          
         }
     }
 }

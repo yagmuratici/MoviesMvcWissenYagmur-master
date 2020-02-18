@@ -18,6 +18,7 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Plugins/bootstrap-datepicker-master/bootstrap-datepicker-master/js/bootstrap-datepicker.js"></script>
 
+    @RenderSection("myh2style",false)
 
     @*<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
 </head>
@@ -30,7 +31,7 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <span style="color:white;">Welcome @User.Identity.Name</span>
+                <span style="color:greenyellow;">Welcome @User.Identity.Name</span>
                 @:&nbsp;
                 <a style="color:blueviolet;" href="@Url.RouteUrl("Default", new { controller = "Login" , action = "Logout" })">Logout</a>
 
@@ -59,6 +60,9 @@
                         <a class="nav-link" href="@Url.Action("Index", "Reviews")">Reviews</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home" , new { area = "Admin" })">Admin</a>
+                    </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,8 +82,8 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>*@
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>*@
                 </ul>
                 @*<form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
